@@ -1,5 +1,6 @@
 'use strict';
 
+const { execSync } = require( 'child_process' );
 const puppeteer = require( 'puppeteer' );
 const argv = require( 'minimist' )( process.argv.slice( 2 ) );
 const fs = require( 'fs' );
@@ -7,9 +8,9 @@ const fs = require( 'fs' );
 // task to benchmark
 const bench_task = ( async ( ) => 
 {   
-    const tstart = process.hrtime();
+    var tstart = process.hrtime();
     const browser = await puppeteer.launch({ headless: false, executablePath: '/var/bench/chromium-browser/chromium-browser-v7' });
-    const tlaunch = process.hrtime( tstart );
+    var tlaunch = process.hrtime( tstart );
     const page = await browser.newPage();
     
     await page.goto( 'file:///home/cristidbr/Desktop/pi4_bench/benchmark.htm' );
@@ -19,7 +20,10 @@ const bench_task = ( async ( ) =>
     }); 
 
     var tend = process.hrtime( tstart );
-    await browser.close()
+    await browser.close();
+    
+    // clear cached memory
+    execSync( 'sync ; echo 3 | sudo tee /proc/sys/vm/drop_caches' );
 
     return [ tlaunch, tend ];
 });
