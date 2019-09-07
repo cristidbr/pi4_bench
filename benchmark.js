@@ -8,7 +8,7 @@ const fs = require( 'fs' );
 const bench_task = ( async ( ) => 
 {   
     const tstart = process.hrtime();
-    const browser = await puppeteer.launch({ headless: false, executablePath: '/var/bench/chromium-browser/chromium-browser' });
+    const browser = await puppeteer.launch({ headless: false, executablePath: '/var/bench/chromium-browser/chromium-browser-v7' });
     const tlaunch = process.hrtime( tstart );
     const page = await browser.newPage();
     
