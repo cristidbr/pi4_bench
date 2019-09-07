@@ -8,11 +8,11 @@ const fs = require( 'fs' );
 const bench_task = ( async ( ) => 
 {   
     const tstart = process.hrtime();
-    const browser = await puppeteer.launch({ headless: false });
+    const browser = await puppeteer.launch({ headless: false, executablePath: '/var/bench/chromium-browser/chromium-browser' });
     const tlaunch = process.hrtime( tstart );
     const page = await browser.newPage();
     
-    await page.goto( 'file:///C:/Users/cristi.dbr/Desktop/pi4_bench/benchmark.htm' );
+    await page.goto( 'file:///home/cristidbr/Desktop/pi4_bench/benchmark.htm' );
     await page.evaluate( () => 
     {
         parseInt( !! window.hasOwnProperty( 'benchReady' ) )         
